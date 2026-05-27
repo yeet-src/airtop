@@ -1,0 +1,7 @@
+# build artifacts
+/bin/
+*.o
+*.o.tmp
+
+# generated from the running kernel's BTF (run `make` to regenerate)
+/include/vmlinux.h
