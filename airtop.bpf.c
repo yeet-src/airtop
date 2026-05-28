@@ -16,16 +16,22 @@
 #define MGMT_FIXED_LEN  12  /* timestamp + beacon int + capability */
 #define SSID_MAX        32
 
-/* These mac80211 types live in the module BTF, not vmlinux. We only
- * take pointers to the first two, so opaque forward declarations are
- * enough for the fentry prototype. */
+/* These mac80211/cfg80211 types live in module BTF, not vmlinux. We only
+ * take pointers to the opaque ones, so forward declarations suffice for
+ * the fentry prototype. */
 struct ieee80211_hw;
 struct ieee80211_sta;
 struct ieee80211_mgmt; /* opaque — we read the frame as raw bytes */
+struct wiphy;          /* opaque — only used as a pointer in on_bss */
 
-/* `ieee80211_channel` / `wiphy` come from vmlinux.h. `cfg80211_inform_bss`
- * is only in the cfg80211 module BTF, so declare the fields we read;
- * CO-RE relocates their offsets by name at load. */
+/* `cfg80211_inform_bss` is only in the cfg80211 module BTF. Declare the
+ * fields we read; CO-RE relocates their offsets by name at load. */
+
+/* CO-RE stub: only center_freq is read; the relocator matches by name. */
+struct ieee80211_channel {
+    u32 center_freq;
+};
+
 struct cfg80211_inform_bss {
     struct ieee80211_channel *chan;
     s32 signal; /* mBm (dBm × 100) for MBM-type wiphys */
