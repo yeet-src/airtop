@@ -13,6 +13,7 @@ VMLINUX := include/vmlinux.h
 
 CFLAGS = -O2 -g -Wall -target bpf \
          -D__TARGET_ARCH_$(ARCH) \
+         -D__IEEE80211_CHANNEL_STUB \
          -Iinclude -I$(LIBBPF_INCLUDE)
 
 all: $(OBJ)

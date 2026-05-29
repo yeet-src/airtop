@@ -28,9 +28,11 @@ struct wiphy;          /* opaque — only used as a pointer in on_bss */
  * fields we read; CO-RE relocates their offsets by name at load. */
 
 /* CO-RE stub: only center_freq is read; the relocator matches by name. */
+#ifndef __IEEE80211_CHANNEL_STUB
 struct ieee80211_channel {
     u32 center_freq;
 };
+#endif
 
 struct cfg80211_inform_bss {
     struct ieee80211_channel *chan;
@@ -184,8 +186,8 @@ int BPF_PROG(on_bss, struct wiphy *wiphy, struct cfg80211_inform_bss *bdata,
     e->ssid_len = 0;
     e->ssid[0] = '\0';
 
-    __s32 mbm = BPF_CORE_READ(bdata, signal);
-    e->signal = (__s8)(mbm / 100);          /* mBm → dBm */
+    __u32 mbm = BPF_CORE_READ(bdata, signal);
+    e->signal = (__s8)((__u32)mbm / 100);          /* mBm → dBm */
     e->freq = BPF_CORE_READ(bdata, chan, center_freq);
 
     const __u8 *tag = buf + DOT11_HDR_LEN + MGMT_FIXED_LEN;
