@@ -1,3 +1,4 @@
+<!-- yeet:user-friendly-title: Capture live wifi traffic -->
 # airtop
 
 **htop for the airwaves** — a live 802.11 (Wi-Fi) RF dashboard in your terminal.
