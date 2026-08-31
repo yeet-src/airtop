@@ -6,7 +6,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/platform-Linux-1793D1" alt="Linux">
   <img src="https://img.shields.io/badge/built%20with-yeet%20%2B%20eBPF-8A2BE2" alt="yeet + eBPF">
-  <img src="https://img.shields.io/badge/license-GPL-3DA639" alt="GPL">
+  <img src="https://img.shields.io/badge/license-Apache--2.0-3DA639" alt="Apache-2.0">
 </p>
 
 <p align="center">
@@ -165,6 +165,8 @@ vhs assets/airtop.tape    # -> assets/airtop.gif
 It launches airtop off-camera so the GIF opens on the live dashboard. Kick off Wi-Fi scans in another shell while recording to fill the spectrum and AP list.
 
 ## License
+
+Apache-2.0.
 
 The BPF program is GPL (`SEC("license") = "GPL"`), as required by the kernel helpers it uses.
 
