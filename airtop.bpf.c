@@ -27,15 +27,19 @@ struct wiphy;          /* opaque — only used as a pointer in on_bss */
 /* `cfg80211_inform_bss` is only in the cfg80211 module BTF. Declare the
  * fields we read; CO-RE relocates their offsets by name at load. */
 
-/* CO-RE stub: only center_freq is read; the relocator matches by name. */
-#ifndef __IEEE80211_CHANNEL_STUB
-struct ieee80211_channel {
+/* CO-RE flavor: a local, uniquely-named stand-in so the build never depends on
+ * whether this kernel's vmlinux BTF carries a full `ieee80211_channel`. It is a
+ * cfg80211-module type — fully defined in base BTF on some kernels, only
+ * forward-declared on others (which made a plain `struct ieee80211_channel`
+ * an incomplete type and broke the build). libbpf strips the `___local` suffix
+ * and relocates `center_freq` by name against the kernel's real
+ * `ieee80211_channel` at load. */
+struct ieee80211_channel___local {
     u32 center_freq;
 };
-#endif
 
 struct cfg80211_inform_bss {
-    struct ieee80211_channel *chan;
+    struct ieee80211_channel___local *chan;
     s32 signal; /* mBm (dBm × 100) for MBM-type wiphys */
 };
 
